@@ -3,7 +3,7 @@ APP_NAME=app
 ROOT=$(shell pwd)
 
 ## Lint
-DOCKER_IMAGE_LINTER=alvarofpp/python-linter:latest
+DOCKER_IMAGE_LINTER=alvarofpp/python:linter
 LINT_COMMIT_TARGET_BRANCH=origin/main
 
 # Commands
