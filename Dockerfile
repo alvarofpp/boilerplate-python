@@ -1,4 +1,8 @@
-FROM python:3.9.12
+FROM python:3.10-slim
+
+# Virtual environment
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Install requirements
 RUN pip3 install --upgrade pip
