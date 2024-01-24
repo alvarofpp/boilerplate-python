@@ -3,8 +3,11 @@ APP_NAME=app
 ROOT=$(shell pwd)
 
 ## Lint
-DOCKER_IMAGE_LINTER=alvarofpp/python:linter
+DOCKER_IMAGE_LINTER=alvarofpp/linter:python
 LINT_COMMIT_TARGET_BRANCH=origin/main
+
+## Test
+TEST_CONTAINER_NAME=${APP_NAME}_test
 
 # Commands
 .PHONY: install-hooks
@@ -13,11 +16,11 @@ install-hooks:
 
 .PHONY: build
 build: install-hooks
-	@docker-compose build --pull
+	@docker compose build --pull
 
 .PHONY: build-no-cache
 build-no-cache: install-hooks
-	@docker-compose build --no-cache --pull
+	@docker compose build --no-cache --pull
 
 .PHONY: lint
 lint:
@@ -25,8 +28,22 @@ lint:
 	@docker run --rm -v ${ROOT}:/app ${DOCKER_IMAGE_LINTER} " \
 		lint-commit ${LINT_COMMIT_TARGET_BRANCH} \
 		&& lint-markdown \
+		&& lint-dockerfile \
+		&& lint-yaml \
 		&& lint-python"
+
+.PHONY: test
+test:
+	@docker compose run --rm -v ${ROOT}:/app \
+		--name ${TEST_CONTAINER_NAME} ${APP_NAME} \
+		pytest
+
+.PHONY: test-coverage
+test-coverage:
+	@docker compose run --rm -v ${ROOT}:/app \
+		--name ${TEST_CONTAINER_NAME} ${APP_NAME} \
+		/bin/bash -c "pytest --cov=app/"
 
 .PHONY: shell
 shell:
-	@docker-compose run --rm ${APP_NAME} bash
+	@docker compose run --rm ${APP_NAME} bash
