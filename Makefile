@@ -3,7 +3,7 @@ APP_NAME=app
 ROOT=$(shell pwd)
 
 ## Lint
-DOCKER_IMAGE_LINTER=alvarofpp/python:linter
+DOCKER_IMAGE_LINTER=alvarofpp/linter:python
 LINT_COMMIT_TARGET_BRANCH=origin/main
 
 # Commands
@@ -25,6 +25,8 @@ lint:
 	@docker run --rm -v ${ROOT}:/app ${DOCKER_IMAGE_LINTER} " \
 		lint-commit ${LINT_COMMIT_TARGET_BRANCH} \
 		&& lint-markdown \
+		&& lint-dockerfile \
+		&& lint-yaml \
 		&& lint-python"
 
 .PHONY: shell
