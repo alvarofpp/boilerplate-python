@@ -3,7 +3,7 @@ APP_NAME=app
 ROOT=$(shell pwd)
 
 ## Lint
-DOCKER_IMAGE_LINTER=alvarofpp/linter:python
+DOCKER_IMAGE_LINTER=alvarofpp/linter:latest
 LINT_COMMIT_TARGET_BRANCH=origin/main
 
 ## Test
@@ -30,6 +30,7 @@ lint:
 		&& lint-markdown \
 		&& lint-dockerfile \
 		&& lint-yaml \
+		&& lint-shell-script \
 		&& lint-python"
 
 .PHONY: test
