@@ -2,10 +2,6 @@
 
 In this boilerplate you have:
 
-- Python 3.10-slim;
+- Python 3.12;
 - Docker and Docker Compose;
-- Linter workflow.
-
-**TO DO**:
-
-- Tests and coverage (example, command and CI).
+- Integration workflow (lint + tests).
