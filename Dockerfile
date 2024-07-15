@@ -1,4 +1,4 @@
-FROM python:3.12.1-slim
+FROM python:3.12.4-slim
 
 # Virtual environment
 RUN python3 -m venv /opt/venv
